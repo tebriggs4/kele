@@ -25,6 +25,18 @@ class Kele
         @mentor_availability = JSON.parse(response.body)
     end
     
+    def create_submissions(checkpoint_id, assignment_branch, assignment_commit_link, comment)
+        body = {
+            "checkpoint_id": checkpoint_id,
+            "assignment_branch": assignment_branch,
+            "assignment_commit_link": assignment_commit_link,
+            "comment": comment,
+            "enrollment_id": get_me["current_enrollment"]["id"]
+        }
+        response = self.class.post(api_url("checkpoint_submissions"), body: body, headers: { "authorization" => @auth_token })
+        puts response.code
+    end
+    
     private
     
     def api_url(endpoint)
